@@ -51,6 +51,221 @@
             letter-spacing: -0.02em;
         }
 
+        /* ============ MUSIC PLAYER ============ */
+        .music-player-container {
+            position: fixed;
+            bottom: 70px;
+            right: 20px;
+            z-index: 99;
+        }
+
+        .music-player-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--laranja), var(--vermelho));
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(224, 105, 44, 0.4);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .music-player-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(224, 105, 44, 0.6);
+        }
+
+        .music-player-toggle.active {
+            background: linear-gradient(135deg, var(--vermelho), var(--laranja));
+        }
+
+        .music-player {
+            position: absolute;
+            bottom: 75px;
+            right: 0;
+            width: 320px;
+            background: var(--grafite);
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            animation: slideUp 0.3s ease;
+            max-height: 450px;
+            overflow-y: auto;
+        }
+
+        .music-player.active {
+            display: flex;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .music-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .music-header h3 {
+            font-size: 1rem;
+            color: var(--laranja);
+        }
+
+        .music-close {
+            background: none;
+            border: none;
+            color: var(--cinza);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0;
+        }
+
+        .music-close:hover {
+            color: #fff;
+        }
+
+        .music-controls {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .music-btn {
+            background: var(--grafite2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--branco);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .music-btn:hover {
+            background: var(--laranja);
+            border-color: var(--laranja);
+            color: #fff;
+        }
+
+        .music-btn.play {
+            background: linear-gradient(135deg, var(--laranja), var(--vermelho));
+            border: none;
+            font-size: 1.2rem;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .volume-control input {
+            flex: 1;
+            height: 4px;
+            border-radius: 2px;
+            background: var(--grafite3);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .volume-control input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--laranja);
+            cursor: pointer;
+        }
+
+        .volume-control input::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--laranja);
+            border: none;
+            cursor: pointer;
+        }
+
+        .current-song {
+            background: var(--grafite2);
+            padding: 10px;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--cinza-claro);
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .playlist {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .playlist-item {
+            background: var(--grafite2);
+            padding: 8px 10px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: var(--cinza-claro);
+            border-left: 3px solid transparent;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .playlist-item:hover {
+            background: var(--grafite3);
+            border-left-color: var(--laranja);
+            color: var(--branco);
+        }
+
+        .playlist-item.active {
+            background: var(--grafite3);
+            border-left-color: var(--laranja);
+            color: var(--laranja);
+            font-weight: 600;
+        }
+
+        .playlist-item-number {
+            font-size: 0.7rem;
+            color: var(--cinza);
+            min-width: 20px;
+        }
+
         /* ============ LOGIN OVERLAY ============ */
         #loginOverlay {
             position: fixed;
@@ -733,6 +948,10 @@
             .countdown-num {
                 font-size: 2.2rem;
             }
+            .music-player-container {
+                bottom: 20px;
+                right: 30px;
+            }
         }
         @media (min-width: 1024px) {
             .bottom-nav {
@@ -760,6 +979,35 @@
         <button class="login-btn" onclick="handleLogin()">🔑 Entrar</button>
         <div class="login-error" id="loginError"></div>
         <div class="login-hint">💡 Senha convidado: <strong>bbq2026</strong> | Admin: <strong>admin2026</strong></div>
+    </div>
+
+    <!-- ==================== MUSIC PLAYER ==================== -->
+    <div class="music-player-container">
+        <button class="music-player-toggle" id="musicToggle" onclick="toggleMusicPlayer()">🎵</button>
+        <div class="music-player" id="musicPlayer">
+            <div class="music-header">
+                <h3>🎵 Playlist</h3>
+                <button class="music-close" onclick="toggleMusicPlayer()">✕</button>
+            </div>
+            
+            <div class="current-song" id="currentSong">
+                Selecione uma música
+            </div>
+
+            <div class="music-controls">
+                <button class="music-btn" onclick="previousSong()">⏮️</button>
+                <button class="music-btn play" id="playBtn" onclick="togglePlay()">▶️</button>
+                <button class="music-btn" onclick="nextSong()">⏭️</button>
+                <button class="music-btn" onclick="shufflePlaylist()">🔀</button>
+            </div>
+
+            <div class="volume-control">
+                <span>🔊</span>
+                <input type="range" id="volumeControl" min="0" max="100" value="70" onchange="setVolume(this.value)">
+            </div>
+
+            <div class="playlist" id="playlist"></div>
+        </div>
     </div>
 
     <!-- ==================== APP ==================== -->
@@ -904,15 +1152,106 @@
 
     <script>
         // ==================== CONFIGURAÇÃO ====================
-        const EVENT_DATE = new Date('2026-07-12T13:00:00-03:00');  // 👈 12 de julho de 2026 às 13h
+        const EVENT_DATE = new Date('2026-07-12T13:00:00-03:00');
         const SENHA_CONVIDADO = 'bbq2026';
         const SENHA_ADMIN = 'admin2026';
 
-        let usuarioLogado = null; // 'convidado' | 'admin' | null
+        let usuarioLogado = null;
         let paginaAtual = 'home';
         let categoriaAtual = 'carnes';
 
-        // Cardápio padrão (editado conforme solicitado)
+        // ==================== MUSIC PLAYER ====================
+        const playlistMusicas = [
+            { nome: 'Forró da Misericórdia', artista: 'Banda' },
+            { nome: 'Pedaço de Mim', artista: 'Caetano Veloso' },
+            { nome: 'Amigo Estou Aqui', artista: 'Adriana Calcanhotto' },
+            { nome: 'Se Essa Rua Fosse Minha', artista: 'Gildo de Freitas' },
+            { nome: 'Canto da Cidade', artista: 'Daniela Mercury' },
+            { nome: 'Aquele Abraço', artista: 'Gilberto Gil' },
+            { nome: 'Festa para um Rei Negro', artista: 'Gilberto Gil' },
+            { nome: 'Diversão', artista: 'Tom Jobim' },
+            { nome: 'Samba do Avião', artista: 'Tom Jobim' },
+            { nome: 'Garota de Ipanema', artista: 'João Gilberto' }
+        ];
+
+        let musicaAtual = 0;
+        let tocando = false;
+        let volume = 70;
+
+        function toggleMusicPlayer() {
+            const player = document.getElementById('musicPlayer');
+            const toggle = document.getElementById('musicToggle');
+            player.classList.toggle('active');
+            toggle.classList.toggle('active');
+        }
+
+        function renderizarPlaylist() {
+            const playlist = document.getElementById('playlist');
+            playlist.innerHTML = playlistMusicas.map((musica, index) => `
+                <div class="playlist-item ${index === musicaAtual ? 'active' : ''}" onclick="selecionarMusica(${index})">
+                    <span class="playlist-item-number">${index + 1}.</span>
+                    <div>
+                        <strong>${musica.nome}</strong><br>
+                        <span style="font-size:0.7rem;color:var(--cinza);">${musica.artista}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function atualizarMusica() {
+            const musica = playlistMusicas[musicaAtual];
+            document.getElementById('currentSong').textContent = `${musica.nome} - ${musica.artista}`;
+            renderizarPlaylist();
+            
+            if (tocando) {
+                document.getElementById('playBtn').textContent = '⏸️';
+            } else {
+                document.getElementById('playBtn').textContent = '▶️';
+            }
+        }
+
+        function togglePlay() {
+            tocando = !tocando;
+            atualizarMusica();
+            showToast(tocando ? '🎵 Tocando...' : '⏸️ Pausado');
+        }
+
+        function nextSong() {
+            musicaAtual = (musicaAtual + 1) % playlistMusicas.length;
+            atualizarMusica();
+            if (tocando) showToast(`▶️ ${playlistMusicas[musicaAtual].nome}`);
+        }
+
+        function previousSong() {
+            musicaAtual = (musicaAtual - 1 + playlistMusicas.length) % playlistMusicas.length;
+            atualizarMusica();
+            if (tocando) showToast(`⏮️ ${playlistMusicas[musicaAtual].nome}`);
+        }
+
+        function selecionarMusica(index) {
+            musicaAtual = index;
+            tocando = true;
+            atualizarMusica();
+            showToast(`▶️ ${playlistMusicas[musicaAtual].nome}`);
+        }
+
+        function shufflePlaylist() {
+            for (let i = playlistMusicas.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [playlistMusicas[i], playlistMusicas[j]] = [playlistMusicas[j], playlistMusicas[i]];
+            }
+            musicaAtual = 0;
+            tocando = true;
+            atualizarMusica();
+            showToast('🔀 Playlist embaralhada!');
+        }
+
+        function setVolume(value) {
+            volume = value;
+            showToast(`🔊 Volume: ${value}%`);
+        }
+
+        // ==================== CARDÁPIO ====================
         const cardapioPadrao = {
             carnes: [
                 { emoji: '🥩', nome: 'Picanha', desc: 'Nobre e suculenta, grelhada no ponto perfeito' },
@@ -941,7 +1280,6 @@
             ]
         };
 
-        // Cronograma padrão (sem brincadeiras, início às 13h)
         const cronogramaPadrao = [
             { hora: '13:00', desc: 'Recepção dos convidados' },
             { hora: '13:30', desc: 'Início do churrasco' },
@@ -949,7 +1287,6 @@
             { hora: '18:00', desc: 'Encerramento' }
         ];
 
-        // Avisos descontraídos
         const avisosPadrao = [
             '😄 Traga seu bom humor e prepare-se para jogar conversa fora!',
             '🎵 Vale cantar, dançar e contar aquela história engraçada.',
@@ -958,7 +1295,7 @@
             '📱 Fique à vontade para fotografar, mas aproveite o momento offline também!'
         ];
 
-        // ==================== DADOS PERSISTENTES (localStorage) ====================
+        // ==================== DADOS PERSISTENTES ====================
         function getData(key, fallback) {
             try {
                 const stored = localStorage.getItem(key);
@@ -1016,7 +1353,6 @@
             setTimeout(() => el.style.animation = '', 500);
         }
 
-        // Adicionar keyframe shake dinamicamente
         const shakeStyle = document.createElement('style');
         shakeStyle.textContent =
             '@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}';
@@ -1028,22 +1364,17 @@
             document.getElementById('loginPassword').value = '';
             document.getElementById('loginError').textContent = '';
 
-            // Mostrar/esconder itens admin
             document.querySelectorAll('.admin-only').forEach(el => {
                 el.style.display = usuarioLogado === 'admin' ? 'flex' : 'none';
             });
-            // No mobile, nav-item admin-only
-            if (usuarioLogado === 'admin') {
-                document.querySelectorAll('.admin-only').forEach(el => el.style.display = '');
-            }
 
-            // Esconder área de upload se não for admin
             const uploadArea = document.getElementById('uploadArea');
             if (uploadArea) uploadArea.style.display = usuarioLogado === 'admin' ? 'block' : 'none';
 
             inicializarApp();
             navigateTo('home');
             iniciarCountdown();
+            renderizarPlaylist();
         }
 
         function handleLogout() {
@@ -1051,11 +1382,9 @@
             document.getElementById('loginOverlay').classList.remove('hidden');
             document.getElementById('app').classList.remove('active');
             document.getElementById('loginPassword').focus();
-            // Parar countdown
             if (window.countdownInterval) clearInterval(window.countdownInterval);
         }
 
-        // Enter key no login
         document.getElementById('loginPassword').addEventListener('keydown', function(e) {
             if (e.key === 'Enter') handleLogin();
         });
@@ -1071,7 +1400,6 @@
             setupCatTabs();
         }
 
-        // ==================== NAVEGAÇÃO ====================
         function setupNavigation() {
             document.querySelectorAll('#mainNav .nav-item[data-page]').forEach(btn => {
                 btn.addEventListener('click', function() {
@@ -1096,11 +1424,9 @@
             const targetNav = document.querySelector(`#mainNav .nav-item[data-page="${page}"]`);
             if (targetNav) targetNav.classList.add('active');
 
-            // Scroll to top
             document.getElementById('mainContent').scrollTop = 0;
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            // Atualizar tabela admin se necessário
             if (page === 'admin') renderizarTabelaConfirmados();
             if (page === 'galeria') renderizarGaleria();
         }
@@ -1233,7 +1559,6 @@
                 id: Date.now().toString(36) + Math.random().toString(36).substr(2, 5)
             };
 
-            // Evitar duplicatas (mesmo nome em curto período)
             const duplicata = confirmados.find(c => c.nome.toLowerCase() === nome.toLowerCase());
             if (duplicata) {
                 if (!confirm(`🤔 ${nome} já está na lista. Deseja atualizar a confirmação?`)) return;
@@ -1244,7 +1569,6 @@
             salvarDados();
             showToast('🎉 Sua presença foi confirmada com sucesso!');
 
-            // Limpar formulário
             document.getElementById('rsvpNome').value = '';
             document.getElementById('rsvpAdultos').value = '1';
             document.getElementById('rsvpCriancas').value = '0';
@@ -1354,14 +1678,13 @@
             }, 2500);
         }
 
-        // ==================== INICIAR ====================
-        // Foco no campo de senha ao carregar
         document.getElementById('loginPassword').focus();
 
         console.log('🔥 Churrasco Premium - Site pronto!');
         console.log('👤 Senha convidado: bbq2026');
         console.log('👑 Senha admin: admin2026');
         console.log('📅 Data do evento: 12 de Julho de 2026 às 13h');
+        console.log('🎵 Playlist adicionada com 10 músicas!');
     </script>
 </body>
 </html>
