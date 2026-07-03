@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 Churrasco Premium - Evento Privado</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --preto: #0D0D0D;
+            --grafite: #1A1A1A;
+            --grafite2: #222222;
+            --grafite3: #2A2A2A;
+            --vermelho: #8B1E1E;
+            --vermelho-claro: #B52828;
+            --laranja: #E0692C;
+            --laranja-claro: #F07D45;
+            --branco: #F5F5F5;
+            --cinza: #999;
+            --cinza-claro: #BBB;
+            --sombra: 0 4px 24px rgba(0, 0, 0, 0.4);
+            --radius: 14px;
+            --radius-sm: 10px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--preto);
+            color: var(--branco);
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        /* ============ LOGIN OVERLAY ============ */
+        #loginOverlay {
+            position: fixed;
+            inset: 0;
+            background: var(--preto);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+        #loginOverlay.hidden {
+            display: none;
+        }
+        .login-logo {
+            font-size: 70px;
+            margin-bottom: 10px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        .login-title {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--laranja), var(--vermelho));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+        .login-subtitle {
+            color: var(--cinza);
+            margin-bottom: 28px;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+        .login-input {
+            width: 100%;
+            max-width: 320px;
+            padding: 14px 18px;
+            border-radius: 50px;
+            border: 2px solid var(--grafite3);
+            background: var(--grafite);
+            color: var(--branco);
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+            text-align: center;
+            letter-spacing: 2px;
+            font-family: 'Roboto', sans-serif;
+        }
+        .login-input:focus {
+            border-color: var(--laranja);
+            box-shadow: 0 0 0 4px rgba(224, 105, 44, 0.15);
+        }
+        .login-btn {
+            margin-top: 16px;
+            width: 100%;
+            max-width: 320px;
+            padding: 14px;
+            border-radius: 50px;
+            border: none;
+            background: linear-gradient(135deg, var(--laranja), var(--vermelho));
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            letter-spacing: 0.5px;
+            font-family: 'Inter', sans-serif;
+        }
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(224, 105, 44, 0.4);
+        }
+        .login-btn:active {
+            transform: scale(0.97);
+        }
+        .login-error {
+            color: #ff6b6b;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            min-height: 20px;
+            text-align: center;
+        }
+        .login-hint {
+            color: var(--cinza);
+            font-size: 0.75rem;
+            margin-top: 20px;
+            opacity: 0.7;
+        }
+
+        /* ============ APP CONTAINER ============ */
+        #app {
+            display: none;
+            min-height: 100vh;
+        }
+        #app.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ============ TOP BAR ============ */
+        .topbar {
+            background: var(--grafite);
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(10px);
+        }
+        .topbar-logo {
+            font-size: 1.3rem;
+            font-weight: 800;
+            font-family: 'Inter', sans-serif;
+            color: var(--laranja);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .topbar-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .btn-icon {
+            background: var(--grafite3);
+            border: none;
+            color: var(--branco);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-icon:hover {
+            background: var(--grafite2);
+            color: var(--laranja);
+        }
+        .btn-logout {
+            background: transparent;
+            border: 1px solid var(--grafite3);
+            color: var(--cinza-claro);
+            padding: 7px 14px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-logout:hover {
+            border-color: var(--vermelho);
+            color: #ff6b6b;
+        }
+
+        /* ============ MAIN CONTENT ============ */
+        .main-content {
+            flex: 1;
+            padding: 20px 16px 100px 16px;
+            max-width: 700px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .page {
+            display: none;
+            animation: fadeSlideIn 0.4s ease;
+        }
+        .page.active {
+            display: block;
+        }
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============ CARDS ============ */
+        .card {
+            background: var(--grafite);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+        }
+        .card:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+        .card-header {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ============ BANNER ============ */
+        .banner {
+            background: linear-gradient(135deg, var(--grafite2) 0%, var(--grafite) 100%);
+            border-radius: var(--radius);
+            padding: 30px 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .banner::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(224, 105, 44, 0.25) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .banner-emoji {
+            font-size: 60px;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .banner h1 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+        }
+        .banner p {
+            color: var(--cinza-claro);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============ COUNTDOWN ============ */
+        .countdown {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 16px 0;
+        }
+        .countdown-item {
+            background: var(--grafite3);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            text-align: center;
+            min-width: 65px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .countdown-num {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--laranja);
+            font-family: 'Inter', sans-serif;
+        }
+        .countdown-label {
+            font-size: 0.7rem;
+            color: var(--cinza);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ============ BUTTONS ============ */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            text-decoration: none;
+            text-align: center;
+            border: none;
+            letter-spacing: 0.3px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--laranja), var(--vermelho));
+            color: #fff;
+            width: 100%;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 6px 20px rgba(224, 105, 44, 0.35);
+            transform: translateY(-1px);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--laranja);
+            color: var(--laranja);
+            width: 100%;
+        }
+        .btn-outline:hover {
+            background: var(--laranja);
+            color: #fff;
+        }
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 0.8rem;
+            border-radius: 30px;
+        }
+        .btn-danger {
+            background: var(--vermelho);
+            color: #fff;
+            border: none;
+        }
+
+        /* ============ FORM ============ */
+        .form-group {
+            margin-bottom: 14px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--cinza-claro);
+            font-family: 'Inter', sans-serif;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            border: 2px solid var(--grafite3);
+            background: var(--grafite2);
+            color: var(--branco);
+            font-size: 0.95rem;
+            outline: none;
+            transition: var(--transition);
+            font-family: 'Roboto', sans-serif;
+            resize: vertical;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--laranja);
+        }
+        .form-group select {
+            appearance: none;
+            cursor: pointer;
+        }
+
+        /* ============ TABLE ============ */
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        th,
+        td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            white-space: nowrap;
+        }
+        th {
+            color: var(--laranja);
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* ============ TIMELINE ============ */
+        .timeline {
+            position: relative;
+            padding-left: 28px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--grafite3);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+            padding-left: 10px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -22px;
+            top: 4px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--laranja);
+            border: 2px solid var(--grafite);
+        }
+        .timeline-time {
+            font-weight: 700;
+            color: var(--laranja);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+        }
+        .timeline-desc {
+            color: var(--cinza-claro);
+            font-size: 0.9rem;
+        }
+
+        /* ============ CATEGORY TABS ============ */
+        .cat-tabs {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .cat-tabs::-webkit-scrollbar {
+            display: none;
+        }
+        .cat-tab {
+            padding: 10px 18px;
+            border-radius: 50px;
+            border: 2px solid var(--grafite3);
+            background: transparent;
+            color: var(--cinza-claro);
+            cursor: pointer;
+            white-space: nowrap;
+            font-weight: 600;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+        }
+        .cat-tab.active,
+        .cat-tab:hover {
+            background: var(--laranja);
+            border-color: var(--laranja);
+            color: #fff;
+        }
+        .menu-items {
+            display: grid;
+            gap: 10px;
+        }
+        .menu-item {
+            background: var(--grafite2);
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+        .menu-item-emoji {
+            font-size: 1.5rem;
+        }
+
+        /* ============ GALLERY ============ */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
+        }
+        .gallery img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+        .gallery img:hover {
+            border-color: var(--laranja);
+            transform: scale(1.03);
+        }
+
+        /* ============ AVISOS ============ */
+        .aviso-card {
+            background: var(--grafite2);
+            padding: 14px 18px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            border-left: 3px solid var(--laranja);
+        }
+        .aviso-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        /* ============ BOTTOM NAV ============ */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--grafite);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 4px 14px 4px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            cursor: pointer;
+            color: var(--cinza);
+            transition: var(--transition);
+            font-size: 0.65rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            background: none;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 12px;
+            min-width: 50px;
+        }
+        .nav-item .nav-emoji {
+            font-size: 1.3rem;
+            transition: var(--transition);
+        }
+        .nav-item.active {
+            color: var(--laranja);
+        }
+        .nav-item.active .nav-emoji {
+            transform: scale(1.2);
+        }
+        .nav-item:hover {
+            color: var(--laranja-claro);
+        }
+
+        /* ============ MODAL ============ */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal {
+            background: var(--grafite);
+            border-radius: var(--radius);
+            padding: 24px;
+            max-width: 450px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .modal h3 {
+            margin-bottom: 16px;
+        }
+        .modal-close {
+            float: right;
+            background: none;
+            border: none;
+            color: var(--cinza);
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 50%;
+        }
+        .modal-close:hover {
+            color: #fff;
+        }
+
+        /* ============ TOAST ============ */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2ecc71;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 700;
+            z-index: 300;
+            animation: slideDown 0.4s ease;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+        }
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (min-width: 768px) {
+            #app {
+                flex-direction: row;
+            }
+            .topbar {
+                display: none;
+            }
+            .bottom-nav {
+                position: sticky;
+                top: 0;
+                bottom: auto;
+                flex-direction: column;
+                justify-content: flex-start;
+                gap: 6px;
+                padding: 20px 10px;
+                min-width: 80px;
+                height: 100vh;
+                border-right: 1px solid rgba(255, 255, 255, 0.06);
+                border-top: none;
+                background: var(--grafite);
+            }
+            .nav-item {
+                flex-direction: row;
+                gap: 8px;
+                padding: 10px 14px;
+                font-size: 0.8rem;
+                justify-content: flex-start;
+                width: 100%;
+                border-radius: 10px;
+            }
+            .nav-item .nav-emoji {
+                font-size: 1.2rem;
+            }
+            .main-content {
+                padding: 30px 24px 40px 24px;
+                flex: 1;
+                max-width: 800px;
+                margin: 0 auto;
+            }
+            .countdown-item {
+                min-width: 80px;
+                padding: 18px 22px;
+            }
+            .countdown-num {
+                font-size: 2.2rem;
+            }
+        }
+        @media (min-width: 1024px) {
+            .bottom-nav {
+                min-width: 200px;
+                padding: 24px 16px;
+            }
+            .nav-item {
+                font-size: 0.9rem;
+                gap: 10px;
+            }
+            .main-content {
+                max-width: 900px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== LOGIN OVERLAY ==================== -->
+    <div id="loginOverlay">
+        <div class="login-logo">🥩</div>
+        <div class="login-title">Churrasco Premium</div>
+        <div class="login-subtitle">Evento exclusivo para convidados</div>
+        <input type="password" id="loginPassword" class="login-input" placeholder="Digite a senha" maxlength="30" autofocus>
+        <button class="login-btn" onclick="handleLogin()">🔑 Entrar</button>
+        <div class="login-error" id="loginError"></div>
+        <div class="login-hint">💡 Senha convidado: <strong>bbq2026</strong> | Admin: <strong>admin2026</strong></div>
+    </div>
+
+    <!-- ==================== APP ==================== -->
+    <div id="app">
+        <!-- SIDEBAR / BOTTOM NAV -->
+        <nav class="bottom-nav" id="mainNav">
+            <button class="nav-item active" data-page="home"><span class="nav-emoji">🏠</span> Home</button>
+            <button class="nav-item" data-page="cardapio"><span class="nav-emoji">🍖</span> Cardápio</button>
+            <button class="nav-item" data-page="rsvp"><span class="nav-emoji">✅</span> Confirmar</button>
+            <button class="nav-item" data-page="cronograma"><span class="nav-emoji">⏰</span> Cronograma</button>
+            <button class="nav-item" data-page="localizacao"><span class="nav-emoji">📍</span> Local</button>
+            <button class="nav-item" data-page="galeria"><span class="nav-emoji">📸</span> Galeria</button>
+            <button class="nav-item" data-page="avisos"><span class="nav-emoji">📢</span> Avisos</button>
+            <button class="nav-item admin-only" data-page="admin" style="display:none;"><span class="nav-emoji">⚙️</span> Admin</button>
+            <button class="nav-item" onclick="handleLogout()" style="margin-top:auto;"><span class="nav-emoji">🚪</span> Sair</button>
+        </nav>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content" id="mainContent">
+            <!-- HOME -->
+            <div class="page active" id="page-home">
+                <div class="banner">
+                    <span class="banner-emoji">🥩🔥</span>
+                    <h1>Churrasco Premium 2026</h1>
+                    <p>Um dia inesquecível de carne, fogo e amigos</p>
+                </div>
+                <div class="countdown" id="countdown">
+                    <div class="countdown-item"><div class="countdown-num" id="cd-days">00</div><div class="countdown-label">Dias</div></div>
+                    <div class="countdown-item"><div class="countdown-num" id="cd-hours">00</div><div class="countdown-label">Horas</div></div>
+                    <div class="countdown-item"><div class="countdown-num" id="cd-mins">00</div><div class="countdown-label">Min</div></div>
+                    <div class="countdown-item"><div class="countdown-num" id="cd-secs">00</div><div class="countdown-label">Seg</div></div>
+                </div>
+                <div class="card">
+                    <div class="card-header">📅 Data & Hora</div>
+                    <p style="font-size:1.2rem;font-weight:700;">12 de Julho de 2026</p>
+                    <p style="color:var(--cinza-claro);">A partir das 13:00</p>
+                </div>
+                <div class="card">
+                    <div class="card-header">📍 Local</div>
+                    <p>Wind Residencial - Estr. dos Bandeirantes, 7700 - Jacarepaguá, Rio de Janeiro - RJ</p>
+                </div>
+                <button class="btn btn-primary" onclick="navigateTo('rsvp')" style="margin-top:8px;">✅ Confirmar Presença</button>
+            </div>
+
+            <!-- CARDÁPIO -->
+            <div class="page" id="page-cardapio">
+                <h2 style="margin-bottom:16px;">🍽️ Cardápio do Evento</h2>
+                <div class="cat-tabs" id="catTabs">
+                    <button class="cat-tab active" data-cat="carnes">🥩 Carnes</button>
+                    <button class="cat-tab" data-cat="aves">🍗 Aves</button>
+                    <button class="cat-tab" data-cat="acompanhamentos">🥗 Acomp.</button>
+                    <button class="cat-tab" data-cat="bebidas">🥤 Bebidas</button>
+                    <button class="cat-tab" data-cat="sobremesas">🍰 Sobremesas</button>
+                </div>
+                <div class="menu-items" id="menuItems"></div>
+            </div>
+
+            <!-- RSVP -->
+            <div class="page" id="page-rsvp">
+                <h2 style="margin-bottom:16px;">✅ Confirmação de Presença</h2>
+                <div class="card">
+                    <div class="form-group"><label>Nome *</label><input type="text" id="rsvpNome" placeholder="Seu nome completo"></div>
+                    <div class="form-group"><label>Quantos adultos?</label><input type="number" id="rsvpAdultos" value="1" min="0" max="20"></div>
+                    <div class="form-group"><label>Quantas crianças?</label><input type="number" id="rsvpCriancas" value="0" min="0" max="20"></div>
+                    <div class="form-group"><label>Vai levar acompanhante?</label><select id="rsvpAcompanhante"><option value="Não">Não</option><option value="Sim">Sim</option></select></div>
+                    <div class="form-group"><label>Restrições alimentares</label><input type="text" id="rsvpRestricoes" placeholder="Ex: sem lactose, vegetariano..."></div>
+                    <div class="form-group"><label>Observações</label><textarea id="rsvpObs" rows="2" placeholder="Alguma mensagem..."></textarea></div>
+                    <button class="btn btn-primary" onclick="confirmarPresenca()">🎉 Confirmar Presença</button>
+                    <button class="btn btn-outline" style="margin-top:8px;" onclick="confirmarWhatsApp()">💬 Confirmar via WhatsApp</button>
+                </div>
+            </div>
+
+            <!-- CRONOGRAMA -->
+            <div class="page" id="page-cronograma">
+                <h2 style="margin-bottom:16px;">⏰ Cronograma</h2>
+                <div class="timeline" id="timelineContainer"></div>
+            </div>
+
+            <!-- LOCALIZAÇÃO -->
+            <div class="page" id="page-localizacao">
+                <h2 style="margin-bottom:16px;">📍 Como Chegar</h2>
+                <div class="card" style="padding:8px;overflow:hidden;">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3672.942381761845!2d-43.38450268448458!3d-22.99064838495868!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9bda2f6e5a3b5b%3A0x6c9e2b1c7d3e4a5b!2sEstr.%20dos%20Bandeirantes%2C%207700%20-%20Jacarepagu%C3%A1%2C%20Rio%20de%20Janeiro%20-%20RJ!5e0!3m2!1spt-BR!2sbr!4v1690000000000"
+                    width="100%" height="280" style="border:0;border-radius:10px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                <a href="https://maps.google.com/?q=Estr.+dos+Bandeirantes,+7700+-+Jacarepaguá,+Rio+de+Janeiro" target="_blank" class="btn btn-outline" style="display:block;text-align:center;margin-top:12px;">🗺️ Abrir no Google Maps</a>
+            </div>
+
+            <!-- GALERIA -->
+            <div class="page" id="page-galeria">
+                <h2 style="margin-bottom:16px;">📸 Galeria</h2>
+                <div class="gallery" id="galleryContainer">
+                    <img src="https://images.unsplash.com/photo-1558030006-450675393462?w=400&q=80" alt="Churrasco" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1529193591184-b1e2e4b9a2c2?w=400&q=80" alt="Carne" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=400&q=80" alt="Picanha" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&q=80" alt="Churrasqueira" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80" alt="Ambiente" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80" alt="Prato" loading="lazy">
+                </div>
+                <div class="card" style="margin-top:16px;" id="uploadArea">
+                    <div class="card-header">📤 Enviar foto do evento</div>
+                    <input type="file" id="photoUpload" accept="image/*" style="display:none;" onchange="uploadPhoto(event)">
+                    <button class="btn btn-outline btn-sm" onclick="document.getElementById('photoUpload').click()">Selecionar Foto</button>
+                </div>
+            </div>
+
+            <!-- AVISOS -->
+            <div class="page" id="page-avisos">
+                <h2 style="margin-bottom:16px;">📢 Avisos Importantes</h2>
+                <div id="avisosContainer"></div>
+            </div>
+
+            <!-- ADMIN -->
+            <div class="page" id="page-admin">
+                <h2 style="margin-bottom:16px;">⚙️ Painel Administrativo</h2>
+                <div class="card">
+                    <div class="card-header">📋 Lista de Confirmados</div>
+                    <div class="table-wrapper">
+                        <table id="tabelaConfirmados">
+                            <thead><tr><th>Nome</th><th>Adultos</th><th>Crianças</th><th>Acomp.</th><th>Restrições</th><th>QR Code</th><th>Ações</th></tr></thead>
+                            <tbody id="tabelaBody"></tbody>
+                        </table>
+                    </div>
+                    <button class="btn btn-outline btn-sm" style="margin-top:12px;" onclick="exportarCSV()">📥 Exportar para Excel/CSV</button>
+                </div>
+                <div class="card" style="margin-top:12px;">
+                    <div class="card-header">➕ Adicionar Convidado Manualmente</div>
+                    <div class="form-group"><input type="text" id="adminNome" placeholder="Nome do convidado"></div>
+                    <button class="btn btn-primary btn-sm" onclick="adicionarConvidadoAdmin()">Adicionar</button>
+                </div>
+                <div class="card" style="margin-top:12px;">
+                    <div class="card-header">📢 Novo Aviso</div>
+                    <div class="form-group"><input type="text" id="novoAviso" placeholder="Texto do aviso"></div>
+                    <button class="btn btn-primary btn-sm" onclick="adicionarAviso()">Publicar Aviso</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toastContainer"></div>
+
+    <script>
+        // ==================== CONFIGURAÇÃO ====================
+        const EVENT_DATE = new Date('2026-07-12T13:00:00-03:00');  // 👈 12 de julho de 2026 às 13h
+        const SENHA_CONVIDADO = 'bbq2026';
+        const SENHA_ADMIN = 'admin2026';
+
+        let usuarioLogado = null; // 'convidado' | 'admin' | null
+        let paginaAtual = 'home';
+        let categoriaAtual = 'carnes';
+
+        // Cardápio padrão (editado conforme solicitado)
+        const cardapioPadrao = {
+            carnes: [
+                { emoji: '🥩', nome: 'Picanha', desc: 'Nobre e suculenta, grelhada no ponto perfeito' },
+                { emoji: '🥩', nome: 'Fraldinha', desc: 'Macia e saborosa, tempero especial da casa' },
+                { emoji: '🌭', nome: 'Linguiça', desc: 'Linguiça artesanal toscana defumada' },
+                { emoji: '❤️', nome: 'Coração', desc: 'Coração de frango marinado no alho e ervas' }
+            ],
+            aves: [
+                { emoji: '🍗', nome: 'Asa de Frango', desc: 'Temperada com páprica e limão' },
+                { emoji: '🍗', nome: 'Sobrecoxa', desc: 'Sobrecoxa suculenta assada lentamente na brasa' }
+            ],
+            acompanhamentos: [
+                { emoji: '🍚', nome: 'Arroz', desc: 'Arroz branco soltinho com alho' },
+                { emoji: '🥗', nome: 'Farofa', desc: 'Farofa crocante com bacon e banana' },
+                { emoji: '🍅', nome: 'Vinagrete', desc: 'Tomate, cebola e pimentão frescos' },
+                { emoji: '🧄', nome: 'Pão de Alho', desc: 'Pão francês com manteiga de alho gratinado' }
+            ],
+            bebidas: [
+                { emoji: '🥤', nome: 'Refrigerante', desc: 'Coca-Cola, Guaraná, Sprite' },
+                { emoji: '💧', nome: 'Água', desc: 'Água mineral gelada com e sem gás' },
+                { emoji: '🧃', nome: 'Suco', desc: 'Sabores naturais: laranja, abacaxi, limão' }
+            ],
+            sobremesas: [
+                { emoji: '🎂', nome: 'Bolo', desc: 'Bolo caseiro de chocolate com cobertura' },
+                { emoji: '🍬', nome: 'Docinhos', desc: 'Brigadeiro, beijinho e cajuzinho' }
+            ]
+        };
+
+        // Cronograma padrão (sem brincadeiras, início às 13h)
+        const cronogramaPadrao = [
+            { hora: '13:00', desc: 'Recepção dos convidados' },
+            { hora: '13:30', desc: 'Início do churrasco' },
+            { hora: '17:00', desc: 'Hora da sobremesa' },
+            { hora: '18:00', desc: 'Encerramento' }
+        ];
+
+        // Avisos descontraídos
+        const avisosPadrao = [
+            '😄 Traga seu bom humor e prepare-se para jogar conversa fora!',
+            '🎵 Vale cantar, dançar e contar aquela história engraçada.',
+            '🧴 Protetor solar é essencial — o sol não perdoa.',
+            '🕶️ Óculos escuros e chinelo são o dress code oficial.',
+            '📱 Fique à vontade para fotografar, mas aproveite o momento offline também!'
+        ];
+
+        // ==================== DADOS PERSISTENTES (localStorage) ====================
+        function getData(key, fallback) {
+            try {
+                const stored = localStorage.getItem(key);
+                return stored ? JSON.parse(stored) : fallback;
+            } catch (e) { return fallback; }
+        }
+
+        function setData(key, value) {
+            localStorage.setItem(key, JSON.stringify(value));
+        }
+
+        let confirmados = getData('bbq_confirmados', []);
+        let cardapio = getData('bbq_cardapio', cardapioPadrao);
+        let cronograma = getData('bbq_cronograma', cronogramaPadrao);
+        let avisos = getData('bbq_avisos', avisosPadrao);
+        let galeriaFotos = getData('bbq_galeria', [
+            'https://images.unsplash.com/photo-1558030006-450675393462?w=400&q=80',
+            'https://images.unsplash.com/photo-1529193591184-b1e2e4b9a2c2?w=400&q=80',
+            'https://images.unsplash.com/photo-1544025162-d76694265947?w=400&q=80',
+            'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&q=80',
+            'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80',
+            'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80'
+        ]);
+
+        function salvarDados() {
+            setData('bbq_confirmados', confirmados);
+            setData('bbq_cardapio', cardapio);
+            setData('bbq_cronograma', cronograma);
+            setData('bbq_avisos', avisos);
+            setData('bbq_galeria', galeriaFotos);
+        }
+
+        // ==================== LOGIN ====================
+        function handleLogin() {
+            const senha = document.getElementById('loginPassword').value.trim();
+            const errorEl = document.getElementById('loginError');
+            if (senha === SENHA_ADMIN) {
+                usuarioLogado = 'admin';
+                entrarNoApp();
+            } else if (senha === SENHA_CONVIDADO) {
+                usuarioLogado = 'convidado';
+                entrarNoApp();
+            } else {
+                errorEl.textContent = '❌ Senha incorreta. Tente novamente.';
+                document.getElementById('loginPassword').value = '';
+                document.getElementById('loginPassword').focus();
+                shakeElement(document.getElementById('loginOverlay'));
+            }
+        }
+
+        function shakeElement(el) {
+            el.style.animation = 'none';
+            el.offsetHeight;
+            el.style.animation = 'shake 0.5s ease';
+            setTimeout(() => el.style.animation = '', 500);
+        }
+
+        // Adicionar keyframe shake dinamicamente
+        const shakeStyle = document.createElement('style');
+        shakeStyle.textContent =
+            '@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}';
+        document.head.appendChild(shakeStyle);
+
+        function entrarNoApp() {
+            document.getElementById('loginOverlay').classList.add('hidden');
+            document.getElementById('app').classList.add('active');
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('loginError').textContent = '';
+
+            // Mostrar/esconder itens admin
+            document.querySelectorAll('.admin-only').forEach(el => {
+                el.style.display = usuarioLogado === 'admin' ? 'flex' : 'none';
+            });
+            // No mobile, nav-item admin-only
+            if (usuarioLogado === 'admin') {
+                document.querySelectorAll('.admin-only').forEach(el => el.style.display = '');
+            }
+
+            // Esconder área de upload se não for admin
+            const uploadArea = document.getElementById('uploadArea');
+            if (uploadArea) uploadArea.style.display = usuarioLogado === 'admin' ? 'block' : 'none';
+
+            inicializarApp();
+            navigateTo('home');
+            iniciarCountdown();
+        }
+
+        function handleLogout() {
+            usuarioLogado = null;
+            document.getElementById('loginOverlay').classList.remove('hidden');
+            document.getElementById('app').classList.remove('active');
+            document.getElementById('loginPassword').focus();
+            // Parar countdown
+            if (window.countdownInterval) clearInterval(window.countdownInterval);
+        }
+
+        // Enter key no login
+        document.getElementById('loginPassword').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') handleLogin();
+        });
+
+        // ==================== INICIALIZAÇÃO ====================
+        function inicializarApp() {
+            renderizarMenu();
+            renderizarCronograma();
+            renderizarAvisos();
+            renderizarGaleria();
+            renderizarTabelaConfirmados();
+            setupNavigation();
+            setupCatTabs();
+        }
+
+        // ==================== NAVEGAÇÃO ====================
+        function setupNavigation() {
+            document.querySelectorAll('#mainNav .nav-item[data-page]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const page = this.getAttribute('data-page');
+                    if (page === 'admin' && usuarioLogado !== 'admin') {
+                        showToast('🔒 Acesso restrito ao administrador.');
+                        return;
+                    }
+                    navigateTo(page);
+                });
+            });
+        }
+
+        function navigateTo(page) {
+            paginaAtual = page;
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('#mainNav .nav-item[data-page]').forEach(b => b.classList.remove('active'));
+
+            const targetPage = document.getElementById('page-' + page);
+            if (targetPage) targetPage.classList.add('active');
+
+            const targetNav = document.querySelector(`#mainNav .nav-item[data-page="${page}"]`);
+            if (targetNav) targetNav.classList.add('active');
+
+            // Scroll to top
+            document.getElementById('mainContent').scrollTop = 0;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Atualizar tabela admin se necessário
+            if (page === 'admin') renderizarTabelaConfirmados();
+            if (page === 'galeria') renderizarGaleria();
+        }
+
+        // ==================== COUNTDOWN ====================
+        function iniciarCountdown() {
+            function updateCountdown() {
+                const now = new Date();
+                const diff = EVENT_DATE - now;
+                if (diff <= 0) {
+                    document.getElementById('cd-days').textContent = '00';
+                    document.getElementById('cd-hours').textContent = '00';
+                    document.getElementById('cd-mins').textContent = '00';
+                    document.getElementById('cd-secs').textContent = '00';
+                    if (window.countdownInterval) clearInterval(window.countdownInterval);
+                    return;
+                }
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((diff % (1000 * 60)) / 1000);
+                document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+                document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
+                document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+            }
+            updateCountdown();
+            if (window.countdownInterval) clearInterval(window.countdownInterval);
+            window.countdownInterval = setInterval(updateCountdown, 1000);
+        }
+
+        // ==================== CARDÁPIO ====================
+        function setupCatTabs() {
+            document.querySelectorAll('#catTabs .cat-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('#catTabs .cat-tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    categoriaAtual = this.getAttribute('data-cat');
+                    renderizarMenu();
+                });
+            });
+        }
+
+        function renderizarMenu() {
+            const container = document.getElementById('menuItems');
+            const items = cardapio[categoriaAtual] || [];
+            container.innerHTML = items.map(item => `
+            <div class="menu-item">
+              <span class="menu-item-emoji">${item.emoji}</span>
+              <div>
+                <strong>${item.nome}</strong>
+                <p style="color:var(--cinza);font-size:0.8rem;margin:0;">${item.desc || ''}</p>
+              </div>
+            </div>
+          `).join('');
+        }
+
+        // ==================== CRONOGRAMA ====================
+        function renderizarCronograma() {
+            const container = document.getElementById('timelineContainer');
+            container.innerHTML = cronograma.map(item => `
+            <div class="timeline-item">
+              <div class="timeline-time">${item.hora}</div>
+              <div class="timeline-desc">${item.desc}</div>
+            </div>
+          `).join('');
+        }
+
+        // ==================== AVISOS ====================
+        function renderizarAvisos() {
+            const container = document.getElementById('avisosContainer');
+            container.innerHTML = avisos.map(a => `
+            <div class="aviso-card"><span class="aviso-icon">${a.slice(0,2)}</span> ${a.slice(2).trim()}</div>
+          `).join('');
+        }
+
+        function adicionarAviso() {
+            if (usuarioLogado !== 'admin') return;
+            const input = document.getElementById('novoAviso');
+            const texto = input.value.trim();
+            if (!texto) return showToast('⚠️ Digite um aviso.');
+            avisos.push('📢 ' + texto);
+            salvarDados();
+            renderizarAvisos();
+            input.value = '';
+            showToast('✅ Aviso publicado!');
+        }
+
+        // ==================== GALERIA ====================
+        function renderizarGaleria() {
+            const container = document.getElementById('galleryContainer');
+            container.innerHTML = galeriaFotos.map(src => `
+            <img src="${src}" alt="Foto do evento" loading="lazy" onclick="window.open('${src}','_blank')">
+          `).join('');
+        }
+
+        function uploadPhoto(event) {
+            if (usuarioLogado !== 'admin') return;
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                galeriaFotos.push(e.target.result);
+                salvarDados();
+                renderizarGaleria();
+                showToast('📸 Foto adicionada à galeria!');
+            };
+            reader.readAsDataURL(file);
+            event.target.value = '';
+        }
+
+        // ==================== RSVP ====================
+        function confirmarPresenca() {
+            const nome = document.getElementById('rsvpNome').value.trim();
+            if (!nome) return showToast('⚠️ Por favor, informe seu nome.');
+            const adultos = parseInt(document.getElementById('rsvpAdultos').value) || 0;
+            const criancas = parseInt(document.getElementById('rsvpCriancas').value) || 0;
+            const acompanhante = document.getElementById('rsvpAcompanhante').value;
+            const restricoes = document.getElementById('rsvpRestricoes').value.trim();
+            const obs = document.getElementById('rsvpObs').value.trim();
+
+            const registro = {
+                nome,
+                adultos,
+                criancas,
+                acompanhante,
+                restricoes,
+                obs,
+                data: new Date().toISOString(),
+                id: Date.now().toString(36) + Math.random().toString(36).substr(2, 5)
+            };
+
+            // Evitar duplicatas (mesmo nome em curto período)
+            const duplicata = confirmados.find(c => c.nome.toLowerCase() === nome.toLowerCase());
+            if (duplicata) {
+                if (!confirm(`🤔 ${nome} já está na lista. Deseja atualizar a confirmação?`)) return;
+                confirmados = confirmados.filter(c => c.id !== duplicata.id);
+            }
+
+            confirmados.push(registro);
+            salvarDados();
+            showToast('🎉 Sua presença foi confirmada com sucesso!');
+
+            // Limpar formulário
+            document.getElementById('rsvpNome').value = '';
+            document.getElementById('rsvpAdultos').value = '1';
+            document.getElementById('rsvpCriancas').value = '0';
+            document.getElementById('rsvpAcompanhante').value = 'Não';
+            document.getElementById('rsvpRestricoes').value = '';
+            document.getElementById('rsvpObs').value = '';
+
+            if (paginaAtual === 'admin') renderizarTabelaConfirmados();
+        }
+
+        function confirmarWhatsApp() {
+            const nome = document.getElementById('rsvpNome').value.trim() || '[Seu nome]';
+            const adultos = document.getElementById('rsvpAdultos').value || '1';
+            const criancas = document.getElementById('rsvpCriancas').value || '0';
+            const msg = encodeURIComponent(
+                `🔥 *Churrasco Premium 2026*\n\nOlá! ${nome} confirma presença!\n👤 Adultos: ${adultos}\n👶 Crianças: ${criancas}\n\nMal posso esperar! 🥩✨`
+            );
+            window.open(`https://wa.me/?text=${msg}`, '_blank');
+        }
+
+        // ==================== ADMIN ====================
+        function renderizarTabelaConfirmados() {
+            if (usuarioLogado !== 'admin') return;
+            const tbody = document.getElementById('tabelaBody');
+            if (!tbody) return;
+            tbody.innerHTML = confirmados.map(c => `
+            <tr>
+              <td><strong>${escapeHtml(c.nome)}</strong></td>
+              <td>${c.adultos}</td>
+              <td>${c.criancas}</td>
+              <td>${c.acompanhante || 'Não'}</td>
+              <td style="max-width:100px;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(c.restricoes || '-')}</td>
+              <td><img src="https://api.qrserver.com/v1/create-qr-code/?size=40x40&data=${encodeURIComponent('Convidado: ' + c.nome + ' | ID: ' + c.id)}" alt="QR" style="border-radius:4px;"></td>
+              <td><button class="btn btn-danger btn-sm" onclick="removerConvidado('${c.id}')" style="padding:4px 10px;font-size:0.7rem;">🗑️</button></td>
+            </tr>
+          `).join('');
+            if (confirmados.length === 0) {
+                tbody.innerHTML =
+                    '<tr><td colspan="7" style="text-align:center;color:var(--cinza);padding:20px;">Nenhum convidado confirmado ainda.</td></tr>';
+            }
+        }
+
+        function removerConvidado(id) {
+            if (usuarioLogado !== 'admin') return;
+            if (!confirm('Tem certeza que deseja remover este convidado?')) return;
+            confirmados = confirmados.filter(c => c.id !== id);
+            salvarDados();
+            renderizarTabelaConfirmados();
+            showToast('🗑️ Convidado removido.');
+        }
+
+        function adicionarConvidadoAdmin() {
+            if (usuarioLogado !== 'admin') return;
+            const nome = document.getElementById('adminNome').value.trim();
+            if (!nome) return showToast('⚠️ Informe o nome.');
+            confirmados.push({
+                nome,
+                adultos: 1,
+                criancas: 0,
+                acompanhante: 'Não',
+                restricoes: '',
+                obs: 'Adicionado pelo admin',
+                data: new Date().toISOString(),
+                id: Date.now().toString(36) + Math.random().toString(36).substr(2, 5)
+            });
+            salvarDados();
+            renderizarTabelaConfirmados();
+            document.getElementById('adminNome').value = '';
+            showToast('✅ Convidado adicionado!');
+        }
+
+        function exportarCSV() {
+            if (usuarioLogado !== 'admin') return;
+            if (confirmados.length === 0) return showToast('⚠️ Nenhum dado para exportar.');
+            let csv = 'Nome,Adultos,Crianças,Acompanhante,Restrições,Observações,Data\n';
+            confirmados.forEach(c => {
+                csv +=
+                    `"${c.nome}",${c.adultos},${c.criancas},"${c.acompanhante || 'Não'}","${c.restricoes || ''}","${c.obs || ''}","${new Date(c.data).toLocaleString('pt-BR')}"\n`;
+            });
+            const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'confirmados_churrasco.csv';
+            link.click();
+            URL.revokeObjectURL(url);
+            showToast('📥 Lista exportada com sucesso!');
+        }
+
+        // ==================== UTILITÁRIOS ====================
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function showToast(msg) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = msg;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.4s ease';
+                setTimeout(() => toast.remove(), 400);
+            }, 2500);
+        }
+
+        // ==================== INICIAR ====================
+        // Foco no campo de senha ao carregar
+        document.getElementById('loginPassword').focus();
+
+        console.log('🔥 Churrasco Premium - Site pronto!');
+        console.log('👤 Senha convidado: bbq2026');
+        console.log('👑 Senha admin: admin2026');
+        console.log('📅 Data do evento: 12 de Julho de 2026 às 13h');
+    </script>
+</body>
+</html>
